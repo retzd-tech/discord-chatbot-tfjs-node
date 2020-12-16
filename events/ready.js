@@ -9,7 +9,7 @@ const initializeScheduled = async (client) => {
 
     scheduled.setupCeremony(announcementChannel, ceremonies.checkIn);
     scheduled.setupCeremony(announcementChannel, ceremonies.checkOut);
-    // scheduled.setupCeremony(announcementChannel, ceremonies.greeting);
+    scheduled.setupCeremony(announcementChannel, ceremonies.greeting);
 
     console.log(`ceremonies job ready!`);
   } catch (exception) {
