@@ -9,7 +9,7 @@ const ceremonies = {
   checkOut: {
     time: {
       hour: '17',
-      minute: '0'
+      minute: '1'
     },
     message: '@everyone, check out yuk!'
   },
@@ -19,6 +19,12 @@ const ceremonies = {
       minute: '30'
     },
     message: 'Selamat pagi @everyone, yuk bangun dan jangan lupa check in ya'
+  },
+  resetCheckedIn: {
+    time: {
+      hour: '0',
+      minute: '0'
+    }
   }
 };
 

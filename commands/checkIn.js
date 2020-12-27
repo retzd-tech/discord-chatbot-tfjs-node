@@ -16,7 +16,7 @@ const getDate = () => {
   return `${dayName}, ${day}-${month}-${year} `;
 };
 
-const checkInMember = async (member, message) => {
+const checkInMember = async (checkingInMember, message) => {
   let status;
   let checkedInMembers;
 
@@ -48,7 +48,7 @@ const checkInMember = async (member, message) => {
     return checkedInMembers;
   }
 
-  const checkInMemberData = `${member} - ${status}`;
+  const checkInMemberData = `${checkingInMember} - ${status}`;
   let membersListLog = '';
   checkedInMembers.map((member) => {
     let selectedMember =  member;
@@ -59,7 +59,7 @@ const checkInMember = async (member, message) => {
     membersListLog = membersListLog.concat(selectedMember);
   });
 
-  if(checkedInMembers.toString().includes(member)){
+  if(checkedInMembers.toString().includes(checkingInMember)){
     message.reply('Eh udah minum air putih ? anggota sudah ter-checkin nih');
     return membersListLog.substr(0,membersListLog.length-1);
   }
@@ -76,8 +76,7 @@ const saveCheckedInMembers = async (members) => {
 
 const getCheckedInMember = () => {
   const checkedInMembers = fs.readFileSync(Constant.CHECK_IN_MEMBERS_DIRECTORY, Constant.READ_FILE_STANDARD);
-  const splittedMembers = checkedInMembers.split('\n');
-  return splittedMembers;
+  return checkedInMembers.split('\n');
 };
 
 const checkIn = async (client, message) => {
