@@ -1,5 +1,4 @@
 const utils = require('../utils');
-const say = require('say');
 const discordTTS=require("discord-tts");
 
 const come = async (client, message) => {
