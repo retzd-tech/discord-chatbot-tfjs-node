@@ -1,5 +1,6 @@
-const setupCeremony = require('./setupCeremony');
+const { setupCeremony, setupActivity } = require('./setupScheduler');
 
 module.exports = {
-  setupCeremony
+  setupCeremony,
+  setupActivity
 };

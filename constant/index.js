@@ -4,6 +4,7 @@ const Constant = {
     KICK: 'kick',
     SPRINT_SCHEDULE: 'sprint schedule',
     CHECK_IN: 'check in',
+    RESET_CHECK_IN: 'reset check in',
     HELLO: 'hello',
     ASK: 'ask',
     TELL: 'tell',

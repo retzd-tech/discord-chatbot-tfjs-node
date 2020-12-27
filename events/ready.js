@@ -1,15 +1,18 @@
 const scheduled = require('../scheduled');
 const ceremonies = require('../ceremonies');
 const utils = require('../utils');
-const { initModel } = require('../commands/answer');
+const { initializeModel } = require('../commands/answer');
+const { broadcastMessage, resetCheckedIn } = require('./../actions');
 
 const initializeScheduled = async (client) => {
   try {
-    const announcementChannel = utils.channel.getChannel(client, 'general');
+    const announcementChannel = utils.channel.getChannel(client, 'bot');
 
-    scheduled.setupCeremony(announcementChannel, ceremonies.checkIn);
-    scheduled.setupCeremony(announcementChannel, ceremonies.checkOut);
-    scheduled.setupCeremony(announcementChannel, ceremonies.greeting);
+    scheduled.setupCeremony(announcementChannel, ceremonies.checkIn, broadcastMessage);
+    scheduled.setupCeremony(announcementChannel, ceremonies.checkOut, broadcastMessage);
+    scheduled.setupCeremony(announcementChannel, ceremonies.greeting, broadcastMessage);
+
+    scheduled.setupActivity(ceremonies.resetCheckedIn, resetCheckedIn);
 
     console.log(`ceremonies job ready!`);
   } catch (exception) {
@@ -17,14 +20,14 @@ const initializeScheduled = async (client) => {
   }
 };
 
-const initializeMLModel = async () => {
-  await initModel();
-  console.log('Model Loaded');
+const initializeMachineLearning = async () => {
+  await initializeModel();
+  console.log('Machine Learning Model Loaded');
 };
 
 const onReady = async (client) => {
   await initializeScheduled(client);
-  await initializeMLModel();
+  await initializeMachineLearning();
   console.log(`${client.user.tag} Ready!`);
 };
 

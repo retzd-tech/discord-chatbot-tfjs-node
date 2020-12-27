@@ -5,7 +5,7 @@ const Constant = require('../constant');
 
 let model;
 
-const initModel = async () => {
+const initializeModel = async () => {
   model = await qna.load();
 };
 
@@ -25,6 +25,6 @@ const answer = async (message) => {
 };
 
 module.exports = {
-  initModel,
+  initializeModel,
   answer
 };
