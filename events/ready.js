@@ -6,7 +6,7 @@ const { broadcastMessage, resetCheckedIn } = require('./../actions');
 
 const initializeScheduled = async (client) => {
   try {
-    const announcementChannel = utils.channel.getChannel(client, 'bot');
+    const announcementChannel = utils.channel.getChannel(client, 'general');
 
     scheduled.setupCeremony(announcementChannel, ceremonies.checkIn, broadcastMessage);
     scheduled.setupCeremony(announcementChannel, ceremonies.checkOut, broadcastMessage);
