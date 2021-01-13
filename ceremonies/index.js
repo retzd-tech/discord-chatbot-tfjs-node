@@ -9,7 +9,7 @@ const ceremonies = {
   checkOut: {
     time: {
       hour: '17',
-      minute: '1'
+      minute: '0'
     },
     message: '@everyone, check out yuk!'
   },
