@@ -1,17 +1,19 @@
 const scheduled = require('../scheduled');
-const ceremonies = require('../ceremonies');
+const cronSetting = require('../cronSetting');
 const utils = require('../utils');
 const { initModel } = require('../commands/answer');
 
 const initializeScheduled = async (client) => {
   try {
     const announcementChannel = utils.channel.getChannel(client, 'general');
+    const releaseChannel = utils.channel.getChannel(client, 'frontend-release');
 
-    scheduled.setupCeremony(announcementChannel, ceremonies.checkIn);
-    scheduled.setupCeremony(announcementChannel, ceremonies.checkOut);
-    scheduled.setupCeremony(announcementChannel, ceremonies.greeting);
+    scheduled.setupCeremony(announcementChannel, cronSetting.checkIn);
+    scheduled.setupCeremony(announcementChannel, cronSetting.checkOut);
+    scheduled.setupCeremony(announcementChannel, cronSetting.greeting);
+    scheduled.checkNexus(releaseChannel, cronSetting.nexus);
 
-    console.log(`ceremonies job ready!`);
+    console.log(`CronJob job ready!`);
   } catch (exception) {
     console.log(exception.message)
   }
