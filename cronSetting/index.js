@@ -1,4 +1,4 @@
-const ceremonies = {
+const cronSetting = {
   checkIn: {
     time: {
       hour: '9',
@@ -19,7 +19,12 @@ const ceremonies = {
       minute: '30'
     },
     message: 'Selamat pagi @everyone, yuk bangun dan jangan lupa check in ya'
+  },
+  nexus:{
+    time:{
+      minute: '10'
+    }
   }
 };
 
-module.exports = ceremonies;
+module.exports = cronSetting;
