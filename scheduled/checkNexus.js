@@ -1,12 +1,27 @@
 const CronJob = require('cron').CronJob;
 const fs = require('fs');
+const cheerio = require('cheerio');
 const axios = require('axios');
 
+const Constant = require('../constant');
+const utils = require('../utils');
+
 const sendMessage = (channel, ticket) => {
-  const message = `New Publish :
-  android : https://nexus.kismanhong.com/repository/dsme/sit/${ticket}/android/sit.apk
-  ios : http://68.183.184.222:3000/?env=sit&version=${ticket}`
-  channel.send(message);
+  const embedOptions = {
+    title: "New Publish",
+    description: `Hey!, there is new Publish for ticket ${ticket}`,
+    fields: [{
+      name: "Android",
+      value: `https://nexus.kismanhong.com/repository/dsme/sit/${ticket}/android/sit.apk`
+    },
+      {
+        name: "IOS",
+        value: `http://68.183.184.222:3000/?env=sit&version=${ticket}`
+      }
+    ],
+  }
+  const embedMessage = utils.embed(embedOptions)
+  channel.send(embedMessage);
 };
 
 const getNexusLog = () => {
@@ -22,30 +37,28 @@ const checkData = (searchTerm, logData) => {
   return !dataExist;
 }
 
-const checkNewPublish = async (channel, nexusConfig) => {
-  let checkedData = getNexusLog(); //[]
+const checkNewPublish = async (channel) => {
+  const releaseChannel = utils.channel.getChannel(channel, 'frontend-release');
+  console.log('check publish on : ', new Date())
+  let checkedData = getNexusLog();
   const splittedCheckData = checkedData.split('\n');
-  const newPublishLogs = '';
+  let newPublishLogs = '';
   const url = 'https://nexus.kismanhong.com/service/rest/repository/browse/dsme/sit/'
-  const path = '/html/body/table/tbody/tr/td[1]/a';
-
-  const repoDocument = axios.get(url);
-  const textContent = repoDocument.evaluate(path, document, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE)
-  let ticket;
   let newPublish =[];
 
-  do {
-    ticket = textContent.iterateNext();
-    const ticketText = ticket?.textContent;
+  const { data } = await axios.get(url);
+  const document = cheerio.load(data);
+  document('td').find('a').each((index, value) => {
+    const ticketText = value.children[0].data;
     if(checkData(ticketText, splittedCheckData)){
       newPublish.push(ticketText)
     }
-    newPublishLogs.concat(ticketText.concat('\n'))
-  } while (ticket)
+    newPublishLogs = newPublishLogs.concat(ticketText.concat('\n'))
+  })
 
-  newPublish.forEach((item) => sendMessage(channel, item))
+  newPublish.forEach((item) => sendMessage(releaseChannel, item))
 
-  await saveNexusLog(checkedData)
+  await saveNexusLog(newPublishLogs)
 }
 
 
@@ -56,9 +69,9 @@ const setupNewPublish = (channel, nexusConfig) => {
   const cronTime = `0 ${minute} * * * *`;
   const timezone = 'Asia/Jakarta';
 
-  const job = new CronJob(cronTime, () => checkNewPublish(channel, nexusConfig), onComplete, startImmediately, timezone);
+  const job = new CronJob(cronTime, () => checkNewPublish(channel), onComplete, startImmediately, timezone);
 
   job.start();
 };
 
-module.exports = setupNewPublish;
+module.exports = { setupNewPublish, checkNewPublish };
