@@ -74,4 +74,4 @@ const setupNewPublish = (channel, nexusConfig) => {
   job.start();
 };
 
-module.exports = { setupNewPublish, checkNewPublish };
+module.exports = setupNewPublish;
