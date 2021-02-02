@@ -28,7 +28,7 @@ const cronSetting = {
   },
   checkNexus:{
     time:{
-      minute: '1'
+      minute: '5'
     }
   }
 };
