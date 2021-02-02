@@ -8,6 +8,9 @@ const getMembers = (squadName) => {
 
 const random = async (client, message) => {
   const words = message.content.split(' ');
+  const { author } = message;
+  const authorName = author.username;
+  const authorIconUrl = author.avatarURL;
   const squadName = words[2];
 
   const membersText = getMembers(squadName);
@@ -18,20 +21,18 @@ const random = async (client, message) => {
   const embedOptions= {
     color: 3447003,
     author: {
-      name: client.user.username,
-      icon_url: client.user.avatarURL
+      name: authorName,
+      icon_url: authorIconUrl
     },
     title: "Randomizer",
+    description: `${authorName} Trigger Random Button!`,
     fields: [{
-      name: "Chosen One",
-      value: `Yang terpilih adalah, jjeng jjeng!`
-    },{
-      name: "",
-      value: `**__${chosenMember}__**`
+      name: "Result",
+      value: `Yang terpilih adalah, jjeng jjeng!\n\n\n **__${chosenMember}__**`
     }],
   };
   const embedMessage = utils.embed(embedOptions);
-  message.channel.send(embedMessage)
+  message.channel.send(embedMessage);
 };
 
 module.exports = random;
