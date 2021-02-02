@@ -26,12 +26,12 @@ const random = async (client, message) => {
       name: "Chosen One",
       value: `Yang terpilih adalah, jjeng jjeng!`
     },{
-      name: "",
+      name: "=======================",
       value: `**__${chosenMember}__**`
     }],
   };
   const embedMessage = utils.embed(embedOptions);
-  message.channel.send(embedMessage)
+  message.reply(embedMessage);
 };
 
 module.exports = random;
