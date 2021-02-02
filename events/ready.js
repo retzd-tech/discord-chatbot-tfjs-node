@@ -29,7 +29,7 @@ const initializeMachineLearning = async () => {
 
 const onReady = async (client) => {
   await initializeScheduled(client);
-  await initializeMachineLearning();
+  // await initializeMachineLearning();
   console.log(`${client.user.tag} Ready!`);
 };
 
