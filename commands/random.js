@@ -15,7 +15,23 @@ const random = async (client, message) => {
   members.pop(); // remove auto enter on IDE LOL
   const randomIndex = Math.floor(Math.random() * members.length);
   const chosenMember = members[randomIndex];
-  message.reply('Yakk siapa yang akan terpilih, jjeng jjeng! \n ```'+chosenMember+'``` ')
+  const embedOptions= {
+    color: 3447003,
+    author: {
+      name: client.user.username,
+      icon_url: client.user.avatarURL
+    },
+    title: "Randomizer",
+    fields: [{
+      name: "Chosen One",
+      value: `Yang terpilih adalah, jjeng jjeng!`
+    },{
+      name: "",
+      value: `**__${chosenMember}__**`
+    }],
+  };
+  const embedMessage = utils.embed(embedOptions);
+  message.send(embedMessage)
 };
 
 module.exports = random;

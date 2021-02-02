@@ -3,7 +3,6 @@ const Discord = require("discord.js");
 const fs = require("fs");
 const client = new Discord.Client();
 
-const { ceremony } = require('./scheduled');
 const config = require('./config');
 
 const initializeBot = async () => {
