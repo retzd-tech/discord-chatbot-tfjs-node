@@ -38,7 +38,6 @@ const checkData = (searchTerm, logData) => {
 };
 
 const checkNewPublish = async (channel) => {
-  const releaseChannel = utils.channel.getChannel(channel, 'frontend-release');
   console.log('check publish on : ', new Date());
   let checkedData = getNexusLog();
   const splittedCheckData = checkedData.split('\n');
@@ -56,7 +55,7 @@ const checkNewPublish = async (channel) => {
     newPublishLogs = newPublishLogs.concat(ticketText.concat('\n'))
   });
 
-  newPublish.forEach((item) => sendMessage(releaseChannel, item));
+  newPublish.forEach((item) => sendMessage(channel, item));
 
   await saveNexusLog(newPublishLogs);
 };
