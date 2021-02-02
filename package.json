@@ -15,7 +15,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@discordjs/opus": "github:discordjs/opus",
     "@tensorflow-models/qna": "^1.0.0",
     "@tensorflow/tfjs-node": "^2.7.0",
     "axios": "^0.21.1",

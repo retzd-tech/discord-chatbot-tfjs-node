@@ -1,8 +1,8 @@
 const cronSetting = {
   checkIn: {
     time: {
-      hour: '18',
-      minute: '2'
+      hour: '9',
+      minute: '0'
     },
     message: '@everyone, Check in yuk!'
   },
