@@ -31,7 +31,7 @@ const random = async (client, message) => {
     }],
   };
   const embedMessage = utils.embed(embedOptions);
-  message.send(embedMessage)
+  message.channel.send(embedMessage)
 };
 
 module.exports = random;
