@@ -1,8 +1,3 @@
-const addOptions = (newOptions, oldOptions) => ({
-  ...oldOptions,
-  newOptions
-});
-
 const createEmbed = (options) => {
   let embed = {
     color: 13956418,
@@ -14,34 +9,55 @@ const createEmbed = (options) => {
   };
 
   if(options.color){
-    addOptions(options.color, embed);
+    embed = {
+      ...embed,
+      color: options.color
+    }
   }
 
   if(options.author){
-    addOptions(options.author, embed);
+    embed = {
+      ...embed,
+      author: options.author
+    }
   }
 
   if(options.title){
-    addOptions(options.author, embed);
+    embed = {
+      ...embed,
+      title: options.title
+    }
   }
 
   if(options.url){
-    addOptions(options.url, embed);
+    embed = {
+      ...embed,
+      url: options.url
+    }
   }
 
   if(options.description){
-    addOptions(options.description, embed);
+    embed = {
+      ...embed,
+      description: options.description
+    }
   }
 
   if(options.fields){
-    addOptions(options.fields, embed);
+    embed = {
+      ...embed,
+      fields: options.fields
+    }
   }
 
   if(options.footer){
-    addOptions(options.footer, embed);
+    embed = {
+      ...embed,
+      footer: options.footer
+    }
   }
 
   return { embed };
-}
+};
 
 module.exports = createEmbed;

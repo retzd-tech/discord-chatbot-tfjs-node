@@ -20,7 +20,7 @@ const sendMessage = (channel, ticket) => {
       }
     ],
   };
-  const embedMessage = utils.embed(embedOptions)
+  const embedMessage = utils.embed(embedOptions);
   channel.send(embedMessage);
 };
 
@@ -65,7 +65,7 @@ const setupNewPublish = (channel, nexusConfig) => {
   const { minute } = nexusConfig.time;
   const startImmediately = true;
   const onComplete = undefined;
-  const cronTime = `0 ${minute} * * * *`;
+  const cronTime = `0 */${minute} * * * *`;
   const timezone = 'Asia/Jakarta';
 
   const job = new CronJob(cronTime, () => checkNewPublish(channel), onComplete, startImmediately, timezone);
