@@ -9,7 +9,7 @@ const utils = require('../utils');
 const sendMessage = (channel, ticket) => {
   const embedOptions = {
     title: "New Publish",
-    description: `Hey!, there is new Publish for ticket ${ticket}`,
+    description: `Halo #qa , there is new Publish for ticket ${ticket}`,
     fields: [{
       name: "Android",
       value: `https://nexus.kismanhong.com/repository/dsme/sit/${ticket}/android/sit.apk`
