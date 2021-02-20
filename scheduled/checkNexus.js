@@ -1,8 +1,8 @@
 const CronJob = require('cron').CronJob;
-const fs = require('fs');
 const cheerio = require('cheerio');
 const axios = require('axios');
 
+const config = require('../config');
 const Constant = require('../constant');
 const utils = require('../utils');
 
@@ -24,12 +24,18 @@ const sendMessage = (channel, ticket) => {
   channel.send(embedMessage);
 };
 
-const getNexusLog = () => {
-  return fs.readFileSync(Constant.CHECK_NEXUS_LOG_DIRECTORY, Constant.READ_FILE_STANDARD);
+const getNexusLog = async () => {
+  const { data } = await axios.get(Constant.NEXUS_LOG_URL);
+  return data;
 };
 
 const saveNexusLog = async (data) => {
-  await fs.writeFileSync(Constant.CHECK_NEXUS_LOG_DIRECTORY, data);
+  const headers = {
+    authorization : `Basic ${config.CREDENTIALS}`,
+    "Content-Type": 'text/plain'
+  };
+  const result = await axios.put(Constant.NEXUS_LOG_URL ,data,{ headers });
+  console.debug(`Status = ${result.status}`);
 };
 
 const checkData = (searchTerm, logData) => {
@@ -39,13 +45,12 @@ const checkData = (searchTerm, logData) => {
 
 const checkNewPublish = async (channel) => {
   console.log('check publish on : ', new Date());
-  let checkedData = getNexusLog();
+  let checkedData = await getNexusLog();
   const splittedCheckData = checkedData.split('\n');
   let newPublishLogs = '';
-  const url = 'https://nexus.kismanhong.com/service/rest/repository/browse/dsme/sit/';
   let newPublish =[];
 
-  const { data } = await axios.get(url);
+  const { data } = await axios.get(Constant.SIT_URL);
   const document = cheerio.load(data);
   document('td').find('a').each((index, value) => {
     const ticketText = value.children[0].data;
@@ -60,12 +65,11 @@ const checkNewPublish = async (channel) => {
   await saveNexusLog(newPublishLogs);
 };
 
-
 const setupNewPublish = (channel, nexusConfig) => {
   const { minute } = nexusConfig.time;
   const startImmediately = true;
   const onComplete = undefined;
-  const cronTime = `0 */${minute} * * * *`;
+  const cronTime = `*/${minute} * * * *`;
   const timezone = 'Asia/Jakarta';
 
   const job = new CronJob(cronTime, () => checkNewPublish(channel), onComplete, startImmediately, timezone);
