@@ -13,10 +13,11 @@ const Constant = {
   },
   READ_FILE_STANDARD: 'utf-8',
   CHECK_IN_LOG_DIRECTORY: './data/checkIn.log',
-  CHECK_NEXUS_LOG_DIRECTORY: './data/nexusLog.log',
   DATA_DIRECTORY: './data/',
   CHECK_IN_MEMBERS_DIRECTORY: './data/checkedInMembers.log',
-  BOT_KNOWLEDGE: './data/bot_knowledge.txt'
+  BOT_KNOWLEDGE: './data/bot_knowledge.txt',
+  NEXUS_LOG_URL: 'https://nexus.kismanhong.com/repository/dsme/log/nexusLog.log',
+  SIT_URL: 'https://nexus.kismanhong.com/service/rest/repository/browse/dsme/sit/'
 };
 
 module.exports = Constant;
