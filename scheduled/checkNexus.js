@@ -24,17 +24,18 @@ const sendMessage = (channel, ticket) => {
   channel.send(embedMessage);
 };
 
-const getNexusLog = async () => {
-  const { data } = await axios.get(Constant.NEXUS_LOG_URL);
+const getNexusLog = async (directory) => {
+  const { data } = await axios.get(Constant.NEXUS_LOG_URL(directory));
   return data;
 };
 
-const saveNexusLog = async (data) => {
+const saveNexusLog = async (data, directory) => {
   const headers = {
     authorization : `Basic ${config.CREDENTIALS}`,
     "Content-Type": 'text/plain'
   };
-  const result = await axios.put(Constant.NEXUS_LOG_URL ,data,{ headers });
+  const url = Constant.NEXUS_LOG_URL(directory);
+  const result = await axios.put( url, data,{ headers });
   console.debug(`Status = ${result.status}`);
 };
 
@@ -44,8 +45,8 @@ const checkData = (searchTerm, logData) => {
 };
 
 const checkNewPublish = async (channel, directory) => {
-  console.log('check publish on : ', new Date());
-  let checkedData = await getNexusLog();
+  console.log(`check publish on ${directory} : `, new Date());
+  let checkedData = await getNexusLog(directory);
   const splittedCheckData = checkedData.split('\n');
   let newPublishLogs = '';
   let newPublish =[];
@@ -62,11 +63,13 @@ const checkNewPublish = async (channel, directory) => {
 
   newPublish.forEach((item) => sendMessage(channel, item));
 
-  await saveNexusLog(newPublishLogs);
+  await saveNexusLog(newPublishLogs, directory);
 };
 
 const setupNewPublish = (channel, nexusConfig) => {
+  console.log(nexusConfig);
   const { time: {minute}, directory } = nexusConfig;
+  console.log('start cron job for directory : ', directory);
   const startImmediately = true;
   const onComplete = undefined;
   const cronTime = `*/${minute} * * * *`;
