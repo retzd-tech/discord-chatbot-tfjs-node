@@ -16,7 +16,7 @@ const Constant = {
   DATA_DIRECTORY: './data/',
   CHECK_IN_MEMBERS_DIRECTORY: './data/checkedInMembers.log',
   BOT_KNOWLEDGE: './data/bot_knowledge.txt',
-  NEXUS_LOG_URL: 'https://nexus.kismanhong.com/repository/dsme/log/nexusLog.log',
+  NEXUS_LOG_URL: (env) => `https://nexus.kismanhong.com/repository/dsme/log/${env}/nexusLog.log`,
   REPO_URL: 'https://nexus.kismanhong.com/service/rest/repository/browse/dsme/'
 };
 
