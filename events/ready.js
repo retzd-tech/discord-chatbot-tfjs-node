@@ -18,7 +18,7 @@ const initializeScheduled = async (client) => {
     scheduled.setupActivity(cronSetting.resetCheckedIn, resetCheckedIn);
     scheduled.checkNexus(releaseChannel, cronSetting.checkNexusSit);
     scheduled.checkNexus(releaseChannelStaging, cronSetting.checkNexusStaging);
-    scheduled.checkNexus(releaseChannelUat, cronSetting.checkNexus);
+    scheduled.checkNexus(releaseChannelUat, cronSetting.checkNexusUat);
 
     console.log(`CronJob job ready!`);
   } catch (exception) {
