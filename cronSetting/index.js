@@ -34,13 +34,13 @@ const cronSetting = {
   },
   checkNexusStaging:{
     time:{
-      minute: '4'
+      minute: '5'
     },
     directory: 'staging'
   },
   checkNexusUat:{
     time:{
-      minute: '4'
+      minute: '10'
     },
     directory: 'uat'
   }
