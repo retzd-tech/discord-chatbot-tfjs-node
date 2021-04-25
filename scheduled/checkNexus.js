@@ -43,14 +43,14 @@ const checkData = (searchTerm, logData) => {
   return !dataExist;
 };
 
-const checkNewPublish = async (channel) => {
+const checkNewPublish = async (channel, directory) => {
   console.log('check publish on : ', new Date());
   let checkedData = await getNexusLog();
   const splittedCheckData = checkedData.split('\n');
   let newPublishLogs = '';
   let newPublish =[];
 
-  const { data } = await axios.get(Constant.SIT_URL);
+  const { data } = await axios.get(Constant.REPO_URL + directory);
   const document = cheerio.load(data);
   document('td').find('a').each((index, value) => {
     const ticketText = value.children[0].data;
@@ -66,13 +66,13 @@ const checkNewPublish = async (channel) => {
 };
 
 const setupNewPublish = (channel, nexusConfig) => {
-  const { minute } = nexusConfig.time;
+  const { time: {minute}, directory } = nexusConfig;
   const startImmediately = true;
   const onComplete = undefined;
   const cronTime = `*/${minute} * * * *`;
   const timezone = 'Asia/Jakarta';
 
-  const job = new CronJob(cronTime, () => checkNewPublish(channel), onComplete, startImmediately, timezone);
+  const job = new CronJob(cronTime, () => checkNewPublish(channel, directory), onComplete, startImmediately, timezone);
 
   job.start();
 };

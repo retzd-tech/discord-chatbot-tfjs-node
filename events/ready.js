@@ -8,13 +8,17 @@ const initializeScheduled = async (client) => {
   try {
     const announcementChannel = utils.channel.getChannel(client, 'general');
     const releaseChannel = utils.channel.getChannel(client, 'frontend-release');
+    const releaseChannelStaging = utils.channel.getChannel(client, 'frontend-release-staging');
+    const releaseChannelUat = utils.channel.getChannel(client, 'frontend-release-uat');
 
     scheduled.setupCeremony(announcementChannel, cronSetting.checkIn, broadcastMessage);
     scheduled.setupCeremony(announcementChannel, cronSetting.checkOut, broadcastMessage);
     scheduled.setupCeremony(announcementChannel, cronSetting.greeting, broadcastMessage);
 
     scheduled.setupActivity(cronSetting.resetCheckedIn, resetCheckedIn);
-    scheduled.checkNexus(releaseChannel, cronSetting.checkNexus);
+    scheduled.checkNexus(releaseChannel, cronSetting.checkNexusSit);
+    scheduled.checkNexus(releaseChannelStaging, cronSetting.checkNexusStaging);
+    scheduled.checkNexus(releaseChannelUat, cronSetting.checkNexus);
 
     console.log(`CronJob job ready!`);
   } catch (exception) {

@@ -26,10 +26,23 @@ const cronSetting = {
       minute: '0'
     }
   },
-  checkNexus:{
+  checkNexusSit:{
     time:{
       minute: '4'
-    }
+    },
+    directory: 'sit'
+  },
+  checkNexusStaging:{
+    time:{
+      minute: '4'
+    },
+    directory: 'staging'
+  },
+  checkNexusUat:{
+    time:{
+      minute: '4'
+    },
+    directory: 'uat'
   }
 };
 
