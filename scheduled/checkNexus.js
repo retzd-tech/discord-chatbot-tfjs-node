@@ -6,17 +6,21 @@ const config = require('../config');
 const Constant = require('../constant');
 const utils = require('../utils');
 
-const sendMessage = (channel, ticket) => {
+const sendMessage = (channel, ticket, directory) => {
   const embedOptions = {
+    author:{
+      name: directory.toUpperCase(),
+      icon_url: Constant.ICON_URL
+    },
     title: "New Publish",
     description: `Halo #qa , there is new Publish for ticket ${ticket}`,
     fields: [{
       name: "Android",
-      value: `https://nexus.kismanhong.com/repository/dsme/sit/${ticket}/android/sit.apk`
+      value: `https://nexus.kismanhong.com/repository/dsme/${directory}/${ticket}/android/${directory}.apk`
     },
       {
         name: "IOS",
-        value: `http://68.183.184.222:3000/?env=sit&version=${ticket}`
+        value: `http://68.183.184.222:3000/?env=${directory}&version=${ticket}`
       }
     ],
   };
@@ -61,7 +65,7 @@ const checkNewPublish = async (channel, directory) => {
     newPublishLogs = newPublishLogs.concat(ticketText.concat('\n'))
   });
 
-  newPublish.forEach((item) => sendMessage(channel, item));
+  newPublish.forEach((item) => sendMessage(channel, item, directory));
 
   await saveNexusLog(newPublishLogs, directory);
 };

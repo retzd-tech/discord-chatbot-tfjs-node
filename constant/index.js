@@ -17,7 +17,8 @@ const Constant = {
   CHECK_IN_MEMBERS_DIRECTORY: './data/checkedInMembers.log',
   BOT_KNOWLEDGE: './data/bot_knowledge.txt',
   NEXUS_LOG_URL: (env) => `https://nexus.kismanhong.com/repository/dsme/log/${env}/nexusLog.log`,
-  REPO_URL: 'https://nexus.kismanhong.com/service/rest/repository/browse/dsme/'
+  REPO_URL: 'https://nexus.kismanhong.com/service/rest/repository/browse/dsme/',
+  ICON_URL : 'https://nexus.kismanhong.com/repository/dsme/assets/img/touchbiz_logo.png'
 };
 
 module.exports = Constant;
